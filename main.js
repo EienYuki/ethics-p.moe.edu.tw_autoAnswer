@@ -208,6 +208,6 @@ window.YEE = {
 			
 		}, 15000)
 	}
-}
+};
 
-window.YEE.initUI()
+window.YEE.initUI();
