@@ -210,6 +210,4 @@ window.YEE = {
 	}
 }
 
-(function(){
-	window.YEE.initUI()
-})()
+window.YEE.initUI()
