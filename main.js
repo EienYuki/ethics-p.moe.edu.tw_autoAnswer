@@ -142,8 +142,8 @@
 			this.iframe.src = 'https://ethics-p.moe.edu.tw/exam/'
 	
 			$("body").html(`
-				<div class="container" style="height: 30vh;">
-					<div class="row">
+				<div class="container" style="height: 30vh; max-height: 250px;">
+					<div class="row" style="overflow-y: scroll;">
 						<div class="form-group" style="margin-top: 10px;">
 							<label for="auto_answer_ans">答案輸入區塊</label>
 							<textarea class="form-control" id="auto_answer_ans" rows="5"></textarea>
