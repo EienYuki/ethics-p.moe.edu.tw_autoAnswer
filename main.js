@@ -129,7 +129,8 @@
 		},
 	
 		btn_auto_answer_ans_onclick () {
-			this.readAns($("#auto_answer_ans").val())
+			let ans_json_str = $("#auto_answer_ans").val()
+			if (ans_json_str != "") this.readAns(ans_json_str)
 			this.run_Auto()
 		},
 		initUI () {
@@ -145,7 +146,7 @@
 				<div class="container" style="height: 30vh; max-height: 250px;">
 					<div class="row" style="overflow-y: scroll;">
 						<div class="form-group" style="margin-top: 10px;">
-							<label for="auto_answer_ans">答案輸入區塊</label>
+							<label for="auto_answer_ans">答案輸入區塊 (如果沒有可以不用輸入)</label>
 							<textarea class="form-control" id="auto_answer_ans" rows="5"></textarea>
 						</div>
 						<div class="form-group">
