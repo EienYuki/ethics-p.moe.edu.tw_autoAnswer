@@ -124,8 +124,9 @@
 		},
 		uilog (str) {
 			console.log("log", str)
-			$('#auto_answer_log').val($('#auto_answer_log').val() + `${str}\n` )
-			$('#auto_answer_log').scrollTop($('#auto_answer_log')[0].scrollHeight)
+			let log_box = $('#auto_answer_log')
+			log_box.val(log_box.val() + `${str}\n` )
+			log_box.scrollTop(log_box[0].scrollHeight)
 		},
 		initUI () {
 			this.iframe = document.createElement('iframe')
@@ -136,33 +137,8 @@
 			this.iframe.style.height = "90vh"
 			this.iframe.src = 'https://ethics-p.moe.edu.tw/exam/'
 	
-			$("body").html(`
-				<div class="container">
-					<div class="col-md-12">
-						<h3>歡迎使用自動作答系統</h3>
-					</div>
-					<div class="col-md-9" style="overflow-y: scroll;">
-						<div class="form-group" style="margin-top: 10px;">
-							<label for="auto_answer_ans">答案輸入區塊 (如果沒有可以不用輸入)</label>
-							<textarea class="form-control" id="auto_answer_ans" rows="5"></textarea>
-						</div>
-						<div class="form-group">
-							<button type="button" class="btn btn-primary" onclick="YEE.btn_auto_answer_ans_onclick()">開始</button>
-							<label style="margin-left: 10px;"> ps:作答完成後會自動加上新的答案 所以要保留紀錄請務必儲存</label>
-						</div>
-					</div>
-					<div class="col-md-3" style="overflow-y: scroll;">
-						<div class="form-group" style="margin-top: 10px;">
-							<label for="auto_answer_log">Log</label>
-							<textarea class="form-control" id="auto_answer_log" rows="5"></textarea>
-							<p style="margin-top: 19px;
-							text-align: right;
-							font-weight: bold;
-							color: #525252;">by EienYuki</p>
-						</div>
-					</div>
-				</div>
-			`)
+			$("body").html('<div id="auto_answer" />')
+			$("body > #auto_answer").load("https://me.asutora.com/ethics-p.moe.edu.tw_autoAnswer/UI.html")
 			$("body").append(this.iframe)
 		},
 		run_Auto (ans_json) {
