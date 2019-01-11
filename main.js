@@ -14,24 +14,10 @@
 		getRandom (min,max) {
 			return Math.floor(Math.random()*(max-min+1))+min
 		},
-		copy (s) {
-			$('body').append('<textarea id="clip_area"></textarea>')
-			  
-			var clip_area = $('#clip_area')
-			  
-			clip_area.text(s)
-			clip_area.select()
-		  
-			document.execCommand('copy')
-		  
-			clip_area.remove()
-		},
 		getJsno_Str_data () {
-			this.copy(JSON.stringify(this.data))
 			return JSON.stringify(this.data)
 		},
 		getJsno_Str_ans () {
-			this.copy(JSON.stringify(this.ans))
 			return JSON.stringify(this.ans)
 		},
 	
@@ -78,7 +64,7 @@
 			}
 			this.uilog(`OK answer 正確：${count_O}, 用猜的：${count_X}`)
 		},
-		// 作答完畢再送出前 執行 執行完後 會自動複製 作答紀錄 到剪貼簿，請務必保存 這資料 analysis_Bpart 會用到
+		// 作答完畢再送出前 一定要執行，請務必保存 這資料 analysis_Bpart 會用到
 		analysis_Apart (tg) {
 			let all = (tg)? tg.find(".table.question > tbody > tr") : $(".table.question > tbody > tr")
 			let out = []
@@ -89,11 +75,9 @@
 				out.push({title, select})
 			}
 			this.data = out
-			this.getJsno_Str_data()
 			this.uilog('OK analysis_Apart')
 		},
 		// 作答完畢再送出後 執行 他會比較你哪些題目是對的 在執行前請一定要執行 readData readAns，如果是第一次 那只需 readData
-		// 執行完畢後會自動把正確答案放在 剪貼簿裡 請務必保存！！
 		analysis_Bpart (tg) {
 			let all = (tg)? tg.find(".table.question > tbody > tr") : $(".table.question > tbody > tr")
 			let 違い = []
@@ -116,7 +100,6 @@
 				if (flag && test.length == 0) this.ans.push(item)
 				return flag
 			})
-			this.getJsno_Str_ans()
 			this.uilog('OK analysis_Bpart')
 		},
 	
