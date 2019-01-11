@@ -38,16 +38,21 @@
 		// 讀取剛剛的作答紀錄 在執行 analysis_Bpart 前一定要執行！！
 		readData (jsno_str) {
 			this.data = JSON.parse(jsno_str)
-			console.log('OK readData')
+			this.uilog('OK readData')
 		},
 		// 讀取答案紀錄 在執行 analysis_Apart analysis_Bpart 前一定要執行！！  除非真的沒有答案。。。
 		readAns (jsno_str) {
 			this.ans = JSON.parse(jsno_str)
-			console.log('OK readAns')
+			this.uilog('OK readAns')
 		},
 		readAns_append (jsno_str) {
-			this.ans = [this.ans, ...JSON.parse(jsno_str)]
-			console.log('OK readAns_append')
+			for (const item of JSON.parse(jsno_str)) {
+				let test = this.ans.filter((item2, index2, array2) => {
+					return item2.title == item.title
+				})
+				if (test.length == 0) this.ans.push(item)
+			}
+			this.uilog('OK readAns_append')
 		},
 		// 作答 如果有答案會自動選正確的 沒有的話隨機
 		answer (tg) {
@@ -71,7 +76,7 @@
 					count_X += 1
 				}
 			}
-			console.log('OK answer', `正確：${count_O}, 用猜的：${count_X}`)
+			this.uilog('OK answer', `正確：${count_O}, 用猜的：${count_X}`)
 		},
 		// 作答完畢再送出前 執行 執行完後 會自動複製 作答紀錄 到剪貼簿，請務必保存 這資料 analysis_Bpart 會用到
 		analysis_Apart (tg) {
@@ -85,7 +90,7 @@
 			}
 			this.data = out
 			this.getJsno_Str_data()
-			console.log('OK analysis_Apart')
+			this.uilog('OK analysis_Apart')
 		},
 		// 作答完畢再送出後 執行 他會比較你哪些題目是對的 在執行前請一定要執行 readData readAns，如果是第一次 那只需 readData
 		// 執行完畢後會自動把正確答案放在 剪貼簿裡 請務必保存！！
@@ -112,7 +117,7 @@
 				return flag
 			})
 			this.getJsno_Str_ans()
-			console.log('OK analysis_Bpart')
+			this.uilog('OK analysis_Bpart')
 		},
 	
 		run_Apart (ans_json_str) {
@@ -133,18 +138,26 @@
 			if (ans_json_str != "") this.readAns(ans_json_str)
 			this.run_Auto()
 		},
+		uilog (str) {
+			console.log("log", str)
+			$('#auto_answer_log').val($('#auto_answer_log').val() + `${str}\n` )
+			$('#auto_answer_log').scrollTop($('#auto_answer_log')[0].scrollHeight)
+		},
 		initUI () {
 			this.iframe = document.createElement('iframe')
 			this.name = `run${new Date().getTime()}`
 			this.iframe.id = this.name
 			this.iframe.name = this.name
 			this.iframe.style.width = "100vw"
-			this.iframe.style.height = "70vh"
+			this.iframe.style.height = "90vh"
 			this.iframe.src = 'https://ethics-p.moe.edu.tw/exam/'
 	
 			$("body").html(`
-				<div class="container" style="height: 30vh; max-height: 250px;">
-					<div class="row" style="overflow-y: scroll;">
+				<div class="container">
+					<div class="col-md-12">
+						<h3>歡迎使用自動作答系統</h3>
+					</div>
+					<div class="col-md-9" style="overflow-y: scroll;">
 						<div class="form-group" style="margin-top: 10px;">
 							<label for="auto_answer_ans">答案輸入區塊 (如果沒有可以不用輸入)</label>
 							<textarea class="form-control" id="auto_answer_ans" rows="5"></textarea>
@@ -152,6 +165,16 @@
 						<div class="form-group">
 							<button type="button" class="btn btn-primary" onclick="YEE.btn_auto_answer_ans_onclick()">開始</button>
 							<label style="margin-left: 10px;"> ps:作答完成後會自動加上新的答案 所以要保留紀錄請務必儲存</label>
+						</div>
+					</div>
+					<div class="col-md-3" style="overflow-y: scroll;">
+						<div class="form-group" style="margin-top: 10px;">
+							<label for="auto_answer_log">Log</label>
+							<textarea class="form-control" id="auto_answer_log" rows="5"></textarea>
+							<p style="margin-top: 19px;
+							text-align: right;
+							font-weight: bold;
+							color: #525252;">by EienYuki</p>
 						</div>
 					</div>
 				</div>
@@ -164,7 +187,7 @@
 			let my = this
 			let box = {}
 			
-			console.log("開始 (延遲5秒)")
+			this.uilog("開始 (延遲5秒)")
 			if (ans_json) my.ans = ans_json
 	
 			setTimeout( () => {
@@ -173,7 +196,7 @@
 				box = $(doc)
 	
 				box.find('#btnStart').click()
-				console.log("準備開始作答 (延遲5秒)")
+				my.uilog("準備開始作答 (延遲5秒)")
 			}, 5000)
 	
 			setTimeout( () => {
@@ -185,7 +208,7 @@
 				my.analysis_Apart(box)
 				
 				box.find("#btnSubmit").click()
-				console.log("作答完成 (延遲5秒)")
+				my.uilog("作答完成 (延遲5秒)")
 			}, 10000)
 	
 			setTimeout( () => {

@@ -1,5 +1,8 @@
-<div class="container" style="height: 30vh; max-height: 250px;">
-	<div class="row" style="overflow-y: scroll;">
+<div class="container">
+	<div class="col-md-12">
+		<h3>歡迎使用自動作答系統</h3>
+	</div>
+	<div class="col-md-9" style="overflow-y: scroll;">
 		<div class="form-group" style="margin-top: 10px;">
 			<label for="auto_answer_ans">答案輸入區塊 (如果沒有可以不用輸入)</label>
 			<textarea class="form-control" id="auto_answer_ans" rows="5"></textarea>
@@ -7,6 +10,16 @@
 		<div class="form-group">
 			<button type="button" class="btn btn-primary" onclick="YEE.btn_auto_answer_ans_onclick()">開始</button>
 			<label style="margin-left: 10px;"> ps:作答完成後會自動加上新的答案 所以要保留紀錄請務必儲存</label>
+		</div>
+	</div>
+	<div class="col-md-3" style="overflow-y: scroll;">
+		<div class="form-group" style="margin-top: 10px;">
+			<label for="auto_answer_log">Log</label>
+			<textarea class="form-control" id="auto_answer_log" rows="5"></textarea>
+			<p style="margin-top: 19px;
+			text-align: right;
+			font-weight: bold;
+			color: #525252;">by EienYuki</p>
 		</div>
 	</div>
 </div>
