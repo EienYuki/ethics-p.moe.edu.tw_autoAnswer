@@ -76,7 +76,7 @@
 					count_X += 1
 				}
 			}
-			this.uilog('OK answer', `正確：${count_O}, 用猜的：${count_X}`)
+			this.uilog(`OK answer 正確：${count_O}, 用猜的：${count_X}`)
 		},
 		// 作答完畢再送出前 執行 執行完後 會自動複製 作答紀錄 到剪貼簿，請務必保存 這資料 analysis_Bpart 會用到
 		analysis_Apart (tg) {
@@ -134,6 +134,7 @@
 		},
 	
 		btn_auto_answer_ans_onclick () {
+			alert('送出答案時畫面空白是正常現象')
 			let ans_json_str = $("#auto_answer_ans").val()
 			if (ans_json_str != "") this.readAns(ans_json_str)
 			this.run_Auto()
@@ -189,6 +190,7 @@
 			
 			this.uilog("開始 (延遲5秒)")
 			if (ans_json) my.ans = ans_json
+			this.uilog(`共有 ${my.ans.length} 筆答案`)
 	
 			setTimeout( () => {
 				let f = document.getElementById(my.name)
