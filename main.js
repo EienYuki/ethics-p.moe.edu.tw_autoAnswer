@@ -138,7 +138,7 @@
 			this.iframe.src = 'https://ethics-p.moe.edu.tw/exam/'
 	
 			$("body").html('<div id="auto_answer" />')
-			$("body > #auto_answer").load("https://me.asutora.com/ethics-p.moe.edu.tw_autoAnswer/UI.html")
+			$("body > #auto_answer").load("https://myreq.asutora.com/ethics-p.moe.edu.tw_autoAnswer/UI.html")
 			$("body").append(this.iframe)
 		},
 		run_Auto (ans_json) {
